@@ -6,7 +6,7 @@ app = Flask(__name__)
   
 
 def ValuePredictor(to_predict_list):
-    to_predict = np.array(to_predict_list).reshape(1, 13)
+    to_predict = np.array(to_predict_list).reshape(1, 14)
     loaded_model = pickle.load(open("sample_paper_decision_model.pkl", "rb"))
     result = loaded_model.predict(to_predict)
     return result
@@ -20,6 +20,7 @@ def result():
     if request.method == "POST":
        
        age = request.form.get("age")
+       cp=  request.form.get("cp")
        # getting input with name = lname in HTML form 
        trestbps = request.form.get("trestbps") 
        chol= request.form.get("chol") 
@@ -33,7 +34,7 @@ def result():
        slope = request.form.get("slope") 
        Ca= request.form.get("Ca") 
        thal = request.form.get("thal") 
-       l1=[age,trestbps,chol,fbs,Gender,Geography,restecg,thalach,exang,oldpeak,slope,Ca,thal]
+       l1=[age,cp,trestbps,chol,fbs,Gender,Geography,restecg,thalach,exang,oldpeak,slope,Ca,thal]
        answer = ValuePredictor(l1)
     return render_template("result.html",Age=answer)
    
